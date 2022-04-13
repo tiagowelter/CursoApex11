@@ -163,4 +163,67 @@ public with sharing class ClasseDemonstraEstrutura {
         return idade >= 18 ? true : false;
     }
 
+    //condições com if else
+    //Esta classe vai receber uma idade e dizer se a pessoa é criança, adolescente ou adulto
+    //Menor que 13 é criança
+    //maior ou igual a 13 e menor ou igual a 21 é adolescente
+    //se for maior que 21 e menor que 65 é adulto
+    //senão idoso
+    // se a idade for nula ou menor que zero deve-se dizer que a idade é inválida
+    public static void comparaIdades(Integer idade){
+        if(idade == null || idade < 0){
+            system.debug('idade inválida');
+        }else{
+            if(idade < 13){
+                system.debug('criança');
+            }else if(idade >= 13 && idade <= 21){
+                system.debug('adolescente');
+            }else if(idade > 21 && idade < 65){
+                system.debug('adulto');
+            }else{
+                system.debug('idoso');
+            }
+        }
+    }
+
+    public static void comparaIdades2(Integer idade){
+        if(idade >= 0 && idade < 13){
+            system.debug('criança');
+        }else if(idade >= 13 && idade <= 21){
+            system.debug('adolescente');
+        }else if(idade > 21 && idade < 65){
+            system.debug('adulto');
+        }else if(idade == null || idade < 0){
+                system.debug('idade inválida');
+        }else{
+            system.debug('idoso');
+        }
+    }   
+    
+    //Consições com switch
+    public static void comparaIdadesSwitch(Integer idade){
+        switch on idade{
+            when 13{
+                system.debug('criança');
+            }
+            when 22{
+                system.debug('adolescente');
+            }
+            when 61{
+                system.debug('adulto');
+            }
+            when null{
+                system.debug('idade inválida');
+            }
+            when else{
+                system.debug('idoso');
+            }
+        }
+    }
+
+    //DESAFIO
+    //Construir um método que recebe dois parâmetros do tipo Inteiro e retorne a soma destes dois parâmetros
+    //se o parâmetro 1 for maior do que 5 deve somar mais dois neste resultado
+
+
 }//Fim do corpo do classe
