@@ -98,5 +98,69 @@ public with sharing class ClasseDemonstraEstrutura {
     }
 
     //DESAFIO - Montar um método que busque e retorne uma lista com todas as oportunidades com a fase igual a 'Closed Won'. Campos: Id e Name
+    public static List<Opportunity> getOpportunities1(){
+        List<Opportunity> opportunitiesList = new List<Opportunity>();
+
+        opportunitiesList = [SELECT Id, Name FROM Opportunity WHERE StageName = 'Closed Won'];
+        
+        return opportunitiesList;
+    }
+
+    public static List<Opportunity> getOpportunities2(){
+        return [SELECT Id, Name FROM Opportunity WHERE StageName = 'Closed Won'];
+    }
+
+    public static List<Opportunity> getOpportunities3(){
+        List<Opportunity> opportunitiesList = new List<Opportunity>([SELECT Id, Name FROM Opportunity WHERE StageName = 'Closed Won']);
+        return opportunitiesList;
+    }
+
+    //Exemplos parametros
+    //ClasseDemonstraEstrutura.exemploParametros(1,10);
+    public static Integer exemploParametros(Integer pInt, Integer pDiv){
+        Integer intTest = (10 + pInt)/pDiv;
+        system.debug('O valor de intTest é '+intTest);
+        return intTest;
+    }
+
+    //ClasseDemonstraEstrutura.exemploParametros2([SELECT Id, Name FROM Account]);
+    public static void exemploParametros2(List<Account> accountsList){
+        system.debug('A lista recebida no parâmetro é: '+ accountsList);
+    }
     
+    //DESAFIO - Criar um método que recebe um nome de uma pessoa, e a idade, e escreva num syste.debug 'Olá NOME, sua idade é X'. Este método não precisa ter retorno.
+    //ClasseDemonstraEstrutura.helloName('José', 45);
+    public static void helloName(String nome, Integer idade){
+        system.debug('Olá '+nome+' , sua idade é '+idade);
+    }
+
+    private static String helloName2(String nome, Integer idade){
+        return 'Olá '+nome+' , sua idade é '+idade;
+    }
+
+    //Chamada de outros métodos
+    public static void callMethods(){
+        system.debug(ClasseDemonstraEstrutura.helloName2('Pedro',250));
+    }
+
+    //Estrutura de controle
+    public static Boolean demostraEstruturaCondicao(Integer idade){
+        Boolean maiordeIdade;
+        //quero retornar true se a pessoa for maior de idade, senão retorna fase
+        if(idade >= 18){
+            //aqui entra se for maior de idade
+            maiordeIdade = true;
+        }else{
+            //senão satisfazer a condição acima entra no else
+            maiordeIdade = false;
+        }
+        return maiordeIdade;
+    }
+
+    //condição ternária
+    public static Boolean demostraEstruturaCondicao2(Integer idade){
+        //IF(StageName = 'AAA' , true, false)
+        return idade >= 18 ? true : false;
+    }
+
 }//Fim do corpo do classe
