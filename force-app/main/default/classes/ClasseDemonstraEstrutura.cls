@@ -330,5 +330,28 @@ public with sharing class ClasseDemonstraEstrutura {
     }
 
     //DESAFIO - Receber o sobrenome, email e nome da empresa e vamos inserir um lead. Se o email do lead já existir deve-se atualizar as informações, senão seve-se inserir. O método deve retornar o lead que foi atualizado/inserido
+    public static Lead insertUpdateLead(String sobrenome, String email, String nomeEmpresa){
+        Lead leadObj = new Lead();
+
+        List<Lead> leadList = new List<Lead>([SELECT Id, Email, LastName, Company FROM Lead WHERE Email = :email]);
+
+        try{
+            if(leadList.size() > 0){
+                leadObj = leadList.get(0);
+                leadObj.LastName = sobrenome;
+                leadObj.Company = nomeEmpresa;
+                update leadObj;
+            }else{
+                leadObj.Email = email;
+                leadObj.Company = nomeEmpresa;
+                leadObj.LastName = sobrenome;
+                insert leadObj;
+            }
+        }catch(Exception e){
+            system.debug(e.getMessage());
+        }
+
+        return leadObj;
+    }
 
 }//Fim do corpo do classe
