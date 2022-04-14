@@ -286,5 +286,49 @@ public with sharing class ClasseDemonstraEstrutura {
 
     //DESAFIO
     //Metodo que recebe um nome nome de fase e retorne o valor total desta fase nas oportunidades
+    public static Decimal getOpportunitiesTotalStageName(String stageNameVARIAVEL){
+        Decimal total = 0;
+        for(Opportunity vTemp : [SELECT Amount FROM Opportunity WHERE StageName = :stageNameVARIAVEL]){
+            total += vTemp.Amount;
+        }
+        return total;
+    }
+
+    //EXECUÇÃO DML - insert - update - delete - upsert
+    //insert - insere
+    //update - atualiza
+    //delete - deleta
+    //upsert - insere ou atualiza
+    public static Account createAccount(String nameParametro){
+        Account accountObj = new Account();
+        accountObj.Name = nameParametro;
+        insert accountObj;
+        return accountObj;
+    }
+
+    public static Account updateAccount(String nomeAtualizado, String idaDaConta){
+
+        List<Account> accountList = new List<Account>([SELECT Id, Name FROM Account WHERE Id = :idaDaConta LIMIT 1]);//primeiro buscamos as informações pelo parâmetro de ID
+
+        Account accountObj = new Account();
+        if(accountList.size() > 0){
+            accountObj = accountList.get(0);//depois pegamos a unica linha que retorna e colocamos no objeto Account
+            accountObj.Name = nomeAtualizado;
+            update accountObj;
+        }
+
+        return accountObj;
+    }
+
+    public static void deleteAccount(String idaDaConta){
+        List<Account> accountList =  new List<Account>([SELECT Id FROM Account WHERE Id = :idaDaConta]);
+        delete accountList;
+    }
+
+    public static void deleteAccount2(String idaDaConta){
+        delete [SELECT Id FROM Account WHERE Id = :idaDaConta];
+    }
+
+    //DESAFIO - Receber o sobrenome, email e nome da empresa e vamos inserir um lead. Se o email do lead já existir deve-se atualizar as informações, senão seve-se inserir. O método deve retornar o lead que foi atualizado/inserido
 
 }//Fim do corpo do classe
