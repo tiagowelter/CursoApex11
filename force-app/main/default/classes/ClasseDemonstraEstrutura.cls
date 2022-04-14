@@ -163,6 +163,18 @@ public with sharing class ClasseDemonstraEstrutura {
         return idade >= 18 ? true : false;
     }
 
+    //condição ternária
+    ///NAO É UMA BOA PRATICA
+    public static Boolean demostraEstruturaCondicao3(Integer idade){
+        Boolean maiorDeIdade;
+        if(idade > 18)
+            maiorDeIdade = true;
+        else
+            maiorDeIdade = false;
+
+        return maiorDeIdade;
+    }    
+
     //condições com if else
     //Esta classe vai receber uma idade e dizer se a pessoa é criança, adolescente ou adulto
     //Menor que 13 é criança
@@ -224,6 +236,55 @@ public with sharing class ClasseDemonstraEstrutura {
     //DESAFIO
     //Construir um método que recebe dois parâmetros do tipo Inteiro e retorne a soma destes dois parâmetros
     //se o parâmetro 1 for maior do que 5 deve somar mais dois neste resultado
+    //retornar um inteiro com a soma
+    public static Integer somaDoisValoresComIf(Integer p1, Integer p2){
+        Integer resultadoSoma = p1 + p2;
+        if(p1 > 5){
+            //resultadoSoma = resultadoSoma + 2;
+            resultadoSoma += 2;
+            //system.debug(' resultadoSoma no debug '+resultadoSoma+2);
+        }
+        system.debug('resultadoSoma '+ resultadoSoma);
+        return resultadoSoma;
+    }
 
+    public static Integer somaDoisValoresComIf2(Integer p1, Integer p2 ){
+        return (p1 > 5) ? (p1 + p2 + 2) : (p1 + p2);
+    }
+    
+    public static Integer somaDoisValoresComIf3(Integer p1, Integer p2 ){
+        return p1 + p2 + (p1 > 5 ? 2 : 0);
+    }
+
+    //estruturas de repetição
+    //Classe que retorne o valor das oportunidades fechadas e ganhas
+    public static Decimal getOpportunitiesTotal(){
+        Decimal total = 0;
+        List<Opportunity> opportunitiesList = new List<Opportunity>([SELECT Amount, Name FROM Opportunity WHERE StageName = 'Closed Won']);
+        
+        //Opportunity vTemp = new Opportunity();
+
+        for(Opportunity vTemp : opportunitiesList){
+            total = total + vTemp.Amount;
+            system.debug('Valor da oportunidade ' + vTemp.Name + ' : ' + vTemp.Amount);
+        }
+
+        return total;
+    }
+
+    public static Decimal getOpportunitiesTotal2(){
+        Decimal total = 0;
+
+        if(Schema.sObjectType.Opportunity.isAccessible()){
+            for(Opportunity vTemp : [SELECT Amount, Name FROM Opportunity WHERE StageName = 'Closed Won']){
+                total = total + vTemp.Amount;
+            }
+        }
+
+        return total;
+    }
+
+    //DESAFIO
+    //Metodo que recebe um nome nome de fase e retorne o valor total desta fase nas oportunidades
 
 }//Fim do corpo do classe
