@@ -263,7 +263,6 @@ public with sharing class ClasseDemonstraEstrutura {
         List<Opportunity> opportunitiesList = new List<Opportunity>([SELECT Amount, Name FROM Opportunity WHERE StageName = 'Closed Won']);
         
         //Opportunity vTemp = new Opportunity();
-
         for(Opportunity vTemp : opportunitiesList){
             total = total + vTemp.Amount;
             system.debug('Valor da oportunidade ' + vTemp.Name + ' : ' + vTemp.Amount);
@@ -353,5 +352,105 @@ public with sharing class ClasseDemonstraEstrutura {
 
         return leadObj;
     }
+
+    //FOR com repetição sem coleção
+    //Temos que receber um valor e atraves desse valor mostrar o texto : Texto 1, Texto 2, e assim por diante
+    public static void mostraTextos(Integer numberText){
+        for(Integer iTemp = 1; iTemp <= numberText; iTemp++ ){
+            system.debug('Texto '+iTemp);
+        }
+    }
+
+    //DESAFIO - 10 contas. Criar 10 contas com o nome 'Conta 1', 'Conta 2', e assim por diante. Não retornar nada
+    public static void createAccounts(){
+        for(Integer i = 1 ; i <= 10; i++){
+            Account accountObj = new Account();
+            accountObj.Name = 'Conta '+i;
+            insert accountObj;
+        }
+    }
+
+    public static void createAccountCorrect(){
+        List<Account> accountList = new List<Account>();
+        for(Integer i; i <= 10; i++){
+            Account accountObj = new Account();
+            accountObj.Name = 'Conta '+i;
+            accountList.add(accountObj);
+        }
+        insert accountList;
+    }
+
+    public static void createAccounts2(Integer valorInserir){
+        for(Integer i = 1 ; i <= valorInserir; i++){
+            Account accountObj = new Account();
+            accountObj.Name = 'Conta '+i;
+            insert accountObj;
+        }
+    }
+
+    //MAP - 
+    public static void mapClass1(){
+        List<String> stringList =  new List<String>();
+        stringList.add('X3');
+        stringList.add('X4');
+        stringList.add('X2');
+        stringList.add('X1');
+
+        Integer position = 1;
+        for(String sTemp : stringList){
+            if(sTemp == 'X2'){
+                system.debug('O X2 esta na posição '+position);
+            }
+            position++;
+        }
+
+        //primeiro a chave e depois a coleção
+        Map<String, Integer> stringMap = new Map<String, Integer>();
+        stringMap.put('X3',0);
+        stringMap.put('X4',1);
+        stringMap.put('X2',2);
+        stringMap.put('X1',3);
+        system.debug('Contem a chave? '+stringMap.containsKey('X2'));
+    }
+
+    //
+    public static void veriFyLeadErrodo(){
+        for(Integer i; i < 10; i++){
+            String companyName = 'Company '+i;
+            List<Lead> leadList = new List<Lead>([SELECT Company FROM Lead WHERE Company = :companyName]);
+
+            if(leadList.size() == 0){
+                Lead leadObj = new Lead();
+                leadObj.LastName = 'LastName '+i;
+                leadObj.Company = companyName;  
+                insert leadObj;
+            }
+        }
+    }
+
+    public static void veriFyLeadCoreto(){
+        Map<String, Lead> leadMap = new Map<String,Lead>();
+        for(Lead vTemp : [SELECT Id, Company, LastName FROM Lead]){
+            leadMap.put(vTemp.Company, vTemp);
+        }
+
+        List<Lead> leadList = new List<Lead>();
+        for(Integer i; i < 10; i++){
+            String companyName = 'Company '+i;
+
+            if(!leadMap.containsKey(companyName)){
+                Lead leadObj = new Lead();
+                leadObj.LastName = 'LastName '+i;
+                leadObj.Company = companyName; 
+                leadList.add(leadObj);
+            }else{
+                Lead leadObj = leadMap.get(companyName);
+                system.debug('O lead já existe com o sobrenome'+ leadObj.LastName);
+            }
+        }
+        insert leadList;
+    }
+
+    //DESAFIO - 
 
 }//Fim do corpo do classe
