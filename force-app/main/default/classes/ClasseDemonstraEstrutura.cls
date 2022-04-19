@@ -487,7 +487,13 @@ public with sharing class ClasseDemonstraEstrutura {
 
     }
     
-    
+    //DESAFIO - receber um número nos parâtros e criar oportunidades conforme esta quantidade. Exemplo nome da oportunidade : Oportunidade 1, Oportunidade 2, etc
+    //No Stage Name, pode-se colocar qualquer nome
+    //Não deixar criar oportunidades com nomes e fases duplicadas
+    //Uma oportunide pode ter o mesmo nome que outra, mas tem que estar numa StageName diferente
+    //Tentar otimizar o máximo possível
+    //Usar somente duas consultas ao banco. 
+    //recuperar uma linha do map leadMap.get(companyName)
     
     
     
