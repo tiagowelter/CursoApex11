@@ -451,6 +451,45 @@ public with sharing class ClasseDemonstraEstrutura {
         insert leadList;
     }
 
-    //DESAFIO - 
+    //DESAFIO - Criar um metodo que recebe um inteiro, e crie a quantidade de contas passadas neste parâmetro. Mas temos que verificar se a conta não existe. Se ela existir, não se deve inserir. Este metodo não deve retornar nada.
+
+    //1 - Criar o metodo
+    public static void createAccountsWithParameter(Integer qtyAccounts){
+        
+        //  2 - Criar um mapa
+        Map<String, Account> accountMap = new Map<String, Account>();
+
+        //Aqui pre carrego os nome das contas que devem ser criadas para diminuir o tamanho do resultado da consulta ao banco de dados
+        List<String> namesList = new List<String>();
+        for(Integer i = 1 ; i <= qtyAccounts; i++){
+            namesList.add('Conta '+i);
+        }
+
+        //  3 - mapa deve guardar a lista de contas
+        for(Account vTemp : [SELECT Id, Name FROM Account WHERE Name IN :namesList ]){
+            accountMap.put(vTemp.Name, vTemp);
+        }
+
+        List<Account> accountList = new List<Account>();
+        //  4 - executar o for
+        for(Integer i = 1 ; i <= qtyAccounts; i++){
+            String nameAccount = 'Conta '+i;
+            //      5 - verificar se a conta não existe
+            if(!accountMap.containsKey(nameAccount)){
+                Account accountObj = new Account();
+                accountObj.Name = nameAccount;
+                accountList.add(accountObj);
+            }
+        }
+
+        //  6 - inserir contas
+        insert accountList;
+
+    }
+    
+    
+    
+    
+    
 
 }//Fim do corpo do classe
