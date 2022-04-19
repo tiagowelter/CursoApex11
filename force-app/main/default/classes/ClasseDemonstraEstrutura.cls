@@ -494,8 +494,55 @@ public with sharing class ClasseDemonstraEstrutura {
     //Tentar otimizar o máximo possível
     //Usar somente duas consultas ao banco. 
     //recuperar uma linha do map leadMap.get(companyName)
-    
-    
+    public static void createOpportunities(Integer qtyOpportunity){
+
+        //1 - criar um mapa
+        Map<String, Opportunity> opportunitiesMap = new Map<String, Opportunity>();
+
+        //2 - criar uma lista com os nomes das oportunidades para usar na query
+        Set<String> oppNameSet = new Set<String>();
+        for(Integer i = 1; i <= qtyOpportunity; i++){
+            oppNameSet.add('Oportunidade '+i);
+        }
+
+        //3 - alimentar o map com as oportunidades, onde a chave do map vai ser o nome
+        for(Opportunity vTemp : [SELECT Name, StageName FROM Opportunity WHERE Name IN :oppNameSet]){
+            opportunitiesMap.put(vTemp.Name, vTemp);
+        }
+        system.debug('opportunitiesMap '+opportunitiesMap);
+
+        //4 - criar uma lista que armazena as oportunidades que serão criadas
+        List<Opportunity> opportunityList = new List<Opportunity>();
+
+        //5 - fazer o for que vai criar as oportunidades
+        String stageNameDefault = 'Prospecting';
+        for(Integer i = 1; i <= qtyOpportunity; i++){
+            String nameOpp = 'Oportunidade '+i;
+            String stageNamTemp = '';
+            //6 - recuperar a linha do mapa
+            if(opportunitiesMap.containsKey(nameOpp)){
+                Opportunity oppObj = opportunitiesMap.get(nameOpp);
+                stageNamTemp = oppObj.StageName;
+            }
+
+            system.debug('stageNamTemp '+stageNamTemp);
+            system.debug('existe oportunidade? '+!opportunitiesMap.containsKey(nameOpp));
+
+            //7 - verificar se a oportunidade existe ou não e adicionar as que não existem na lista
+            if(stageNameDefault != stageNamTemp || String.IsBlank(stageNamTemp)){
+                Opportunity oppToCreateObj = new Opportunity();
+                oppToCreateObj.Name = nameOpp;
+                oppToCreateObj.StageName = stageNameDefault;
+                oppToCreateObj.CloseDate = System.Today();
+                opportunityList.add(oppToCreateObj);
+            }
+        }
+        system.debug('opportunityList '+opportunityList);
+        
+        //8 - inserir as oportunidades
+        insert opportunityList;
+
+    }
     
 
 }//Fim do corpo do classe
