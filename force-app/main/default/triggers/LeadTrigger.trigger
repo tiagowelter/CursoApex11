@@ -1,39 +1,30 @@
 trigger LeadTrigger on Lead (before insert, after insert, before update, after update) {
 
+    TriggerHandler handler = new LeadTriggerHandler(true);
     //Coleções executadas nas triggers
     //Trigger.New - contem od dados após a alteração
     //Trigger.Old - contem os dados antes da alteração
-    if( (Trigger.isInsert || Trigger.isUpdate ) && Trigger.isAfter){
-        List<Task> taskList =  new List<Task>();
-        String nameTask = 'Primeiro contato com o lead';
-
-        Set<Id> idsSet = new Set<Id>();
-        for(Lead vTemp : Trigger.New){
-            idsSet.add(vTemp.Id);
+    switch on Trigger.operationType{
+        when BEFORE_INSERT{
+            handler.beforeInsert(Trigger.new);
         }
-
-        Map<Id, Task> taskMap = new Map<Id, Task>();
-        for(Task vTemp : [SELECT WhoId, Subject FROM Task WHERE Subject = :nameTask AND WhoId IN :idsSet]){
-            taskMap.put(vTemp.WhoId, vTemp);
+        when BEFORE_UPDATE{
+            handler.beforeUpdate(Trigger.old, Trigger.new, Trigger.oldMap, Trigger.newMap);
         }
-
-        for(Lead vTemp : Trigger.New){
-            //Aqui eu crio uma tarefa e vinculo  a cada lead
-            if(!taskMap.containsKey(vTemp.Id)){
-                Task taskObj = new Task();
-                taskObj.Subject = nameTask;
-                taskObj.ActivityDate = System.today();
-                taskObj.WhoId = vTemp.Id;
-                taskList.add(taskObj);
-            }
-        }
-        insert taskList;
-    }
-
-    if( Trigger.isUpdate){
-        //sdasfsadasdasdasd
-    }
-
-    //DESAFIO - Colocar o código desta trigger em uma handler, utilizando como base a TriggerHandler
-
+        when BEFORE_DELETE{
+            //handle.beforeInser()
+        }     
+        when AFTER_INSERT{
+            handler.afterInsert(Trigger.old, Trigger.new);
+        }     
+        when AFTER_UPDATE{
+            handler.afterUpdate(Trigger.old, Trigger.new, Trigger.oldMap, Trigger.newMap);
+        } 
+        when AFTER_DELETE{
+            //handle.beforeInser()
+        }    
+        when AFTER_UNDELETE{
+            //handle.beforeInser()
+        }                                
+    }    
 }

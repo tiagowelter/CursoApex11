@@ -1,4 +1,7 @@
 public without sharing class AccountTriggerHelper {
+    
+    public static final String SUBJECT_ACCOUNT_TASK = 'Verificar dados cadastrais das contas';
+    
     public AccountTriggerHelper() {
 
     }
@@ -14,7 +17,7 @@ public without sharing class AccountTriggerHelper {
         List<Task> taskList = new List<Task>();
         for(Account vTemp : accountList){
             Task taskObj = new Task();
-            taskObj.Subject = 'Verificar dados das contas';
+            taskObj.Subject = SUBJECT_ACCOUNT_TASK;
             taskObj.ActivityDate = System.today();
             taskObj.WhatId = vTemp.Id;
             taskList.add(taskObj);

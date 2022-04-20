@@ -10,7 +10,9 @@ public with sharing class Carro {
 
     public Boolean acelerar(Integer velocidade){
         //DESAFIO - Verificar se o carro tem ou não gasolina. Criar um atributo chamado portaFechada. E se esses atributos não forem atendidos não pode acelerar o carro
-        return this.ligado == true && this.temGasolina && this.portaFechada ? true : false;
+        return this.ligado == true 
+                && this.temGasolina 
+                && this.portaFechada ? true : false;
     }
     
 }
