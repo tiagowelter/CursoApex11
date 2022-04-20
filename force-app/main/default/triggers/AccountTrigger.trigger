@@ -1,4 +1,4 @@
-trigger AccountTrigger on Account (after insert) {
+trigger AccountTrigger on Account (before insert, after insert, before update, after update) {
 
     TriggerHandler handler = new AccountTriggerHandler(true);
 

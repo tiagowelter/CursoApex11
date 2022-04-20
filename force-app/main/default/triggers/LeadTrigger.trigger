@@ -34,4 +34,6 @@ trigger LeadTrigger on Lead (before insert, after insert, before update, after u
         //sdasfsadasdasdasd
     }
 
+    //DESAFIO - Colocar o código desta trigger em uma handler, utilizando como base a TriggerHandler
+
 }

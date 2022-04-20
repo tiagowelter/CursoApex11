@@ -23,7 +23,7 @@ public without sharing class AccountTriggerHandler implements TriggerHandler {
 
     public void beforeUpdate(List<Account> oldAccounts, List<Account> newAccounts, Map<Id, sObject> oldAccountsMap, Map<Id, sObject> newAccountMap){
 
-        //Aqui executamo o que vai no before insert
+        //Aqui executamos o que vai no before insert
 
     }
 
