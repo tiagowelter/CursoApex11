@@ -30,5 +30,8 @@ trigger LeadTrigger on Lead (before insert, after insert, before update, after u
         insert taskList;
     }
 
+    if( Trigger.isUpdate){
+        //sdasfsadasdasdasd
+    }
 
 }
