@@ -27,4 +27,10 @@ public without sharing class AccountTriggerHandler implements TriggerHandler {
 
     }
 
+    public void afterUpdate(List<Account> oldAccounts, List<Account> newAccounts, Map<Id, sObject> oldAccountsMap, Map<Id, sObject> newAccountMap){
+
+        //Aqui executamos o que vai no before insert
+
+    }    
+
 }
