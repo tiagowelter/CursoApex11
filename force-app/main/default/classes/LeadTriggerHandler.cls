@@ -12,7 +12,7 @@ public without sharing class LeadTriggerHandler implements TriggerHandler{
     }
 
     public void afterInsert(List<Lead> oldLeads, List<Lead> newLeads){
-        helper.createLeadTask(newLeads);
+        LeadTriggerHelper.createLeadTask(JSON.serialize(newLeads));
     }
 
     public void beforeUpdate(List<Lead> oldLeads, List<Lead> newLeads, Map<Id, sObject> oldLeadsMap, Map<Id, sObject> newLeadMap){
@@ -20,6 +20,6 @@ public without sharing class LeadTriggerHandler implements TriggerHandler{
     }
 
     public void afterUpdate(List<Lead> oldLeads, List<Lead> newLeads, Map<Id, sObject> oldLeadsMap, Map<Id, sObject> newLeadMap){
-        helper.createLeadTask(newLeads);
+        LeadTriggerHelper.createLeadTask(JSON.serialize(newLeads));
     }        
 }
