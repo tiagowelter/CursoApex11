@@ -30,7 +30,6 @@ public with sharing class GetExternalLeads {
             }
             insert listLead;
         }
-
     }
 
     public class listData{
