@@ -13,7 +13,6 @@ public with sharing class GetExternalLeadsTest {
 
     @isTest
     static void testGetData() {
-
         Test.startTest();
             Test.setMock(HttpCalloutMock.class, new Mock());
             GetExternalLeads.getData();

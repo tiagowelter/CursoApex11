@@ -5,8 +5,7 @@ global with sharing class LeadApi {
     @HttpGet
     global static List<Lead> getLeads(){
 
-        String asParamStr = RestContext.request.requestURI.substring(RestContext.request.requestURI.lastIndexOf('/')+1);
-        String sobrenome = String.IsnotBlank(asParamStr) ? RestContext.request.params.get('sobrenome') : '';
+        String sobrenome = RestContext.request.params.get('sobrenome');
 
         List<Lead> leadList = new List<Lead>();
 
@@ -48,7 +47,5 @@ global with sharing class LeadApi {
         return leadsInsertUpdateList;
 
     }
-
-
 
 }
