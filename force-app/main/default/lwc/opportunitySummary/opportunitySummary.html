@@ -3,13 +3,16 @@
         <div class="divCenter">
             <lightning-button 
                 class="slds-m-arround_medium"
-                label="Nova Compra"></lightning-button>
+                label="Nova Compra"
+                onclick={openNewSale}></lightning-button>
         </div>
         <br/>
         <br/>
         <lightning-datatable
             class="datatable"
             columns={columnsVar}
-            data={dataVar}></lightning-datatable>
+            data={dataVar}
+            key-field="Id"
+            hide-checkbox-column></lightning-datatable>
     </lightning-card>
 </template>

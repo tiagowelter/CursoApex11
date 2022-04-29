@@ -1,5 +1,6 @@
 import { LightningElement } from 'lwc';
 import getOpportunities from '@salesforce/apex/OpportunitySummary.getOpportunities';
+import { NavigationMixin } from 'lightning/navigation';
 
 const columns = [
     {
@@ -16,9 +17,31 @@ const columns = [
     }
  ];
 
-export default class OpportunitySummary extends LightningElement {
+export default class OpportunitySummary extends NavigationMixin(LightningElement) {
 
     columnsVar = columns;
     dataVar = [];
+
+    connectedCallback(){
+        console.log('CARREGOU');
+        this.findOpportunities();
+    }
+
+    findOpportunities(){
+        getOpportunities({}).then( (response) => {
+            console.log('response', response);
+            this.dataVar = response;
+        });
+    }
+
+    openNewSale(){
+        console.log('Entrando no botão');
+        this[NavigationMixin.Navigate]({
+            type : 'standard__navItemPage',
+            attributes : {
+                apiName : 'Carrinho'
+            }
+        });
+    }
 
 }
