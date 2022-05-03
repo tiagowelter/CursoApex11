@@ -49,9 +49,9 @@ export default class ProductList extends LightningElement {
         this.getProductsJS();
     }
 
-    handleProductSelected(event){
-        console.log('Capturou o evento do componente filho', event.detail);
-        fireEvent(this.pageRef, 'selectedProduct', event.detail);
+    handleProductSelected(event){        
+        fireEvent(this.pageRef, 'selectedProductX', event.detail);
+        //console.log('Capturou o evento do componente filho', event.detail);
     }
 
 }
