@@ -1,9 +1,37 @@
 <template>
     <template if:true={getAccountId}>
-        <lightning-card title="Lista produtos" icon-name="custom:custom60">
-            <div class="slds-m-horizontal_medium">
-
-            </div>
-        </lightning-card>
+        <div class="slds-card slds-p-arround_x_small">
+            <lightning-card title="Lista produtos" icon-name="custom:custom60">
+                <div class="slds-m-horizontal_medium">
+                    <div class="c-container">
+                        <lightning-layout multiple-rows>
+                            <template for:each={products.allDatas} for:item="cTemp">
+    
+                                <lightning-layout-item 
+                                    size="4"
+                                    key={cTemp.Id}
+                                    padding="arround-small">
+                                    
+                                    <c-product-card
+                                        product={cTemp}
+                                        class="slds-m-arround_x-small"
+                                        onselected={handleProductSelected}></c-product-card>
+                                
+                                </lightning-layout-item>
+    
+                            </template>
+                        </lightning-layout>
+                    </div>
+                    <br/>
+                    <hr/>
+                    <c-paginator
+                        page-number={page}
+                        page-size={products.tamanhoPagina}
+                        total-item-count={products.totalItems}
+                        onprevious={handlePreviousPage}
+                        onnext={handleNextPage}></c-paginator>
+                </div>
+            </lightning-card>
+        </div>
     </template>
 </template>

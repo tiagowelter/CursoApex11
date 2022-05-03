@@ -1,5 +1,5 @@
 import { LightningElement, wire } from 'lwc';
-import {registerListener,} from 'c/pubsub';
+import {registerListener, fireEvent} from 'c/pubsub';
 import {CurrentPageReference} from 'lightning/navigation';
 import getProducts from '@salesforce/apex/ProductController.getProducts';
 
@@ -37,6 +37,21 @@ export default class ProductList extends LightningElement {
         }).catch( (error) => {
             console.log('ERRO AO BUSCAR PRODUTO ',error);
         });
+    }
+
+    handlePreviousPage(){
+        this.page = this.page -1;
+        this.getProductsJS();
+    }
+
+    handleNextPage(){
+        this.page = this.page + 1;
+        this.getProductsJS();
+    }
+
+    handleProductSelected(event){
+        console.log('Capturou o evento do componente filho', event.detail);
+        fireEvent(this.pageRef, 'selectedProduct', event.detail);
     }
 
 }
