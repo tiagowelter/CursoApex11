@@ -6,9 +6,12 @@ import {CurrentPageReference} from 'lightning/navigation';
 export default class CartDetail extends LightningElement {
 
     @wire(CurrentPageReference) pageRef;
-    accountId = null;
+    @track accountId = null;
     @track products = [];
     @track total = 0;
+    @track opportunityName = null;
+    @track opportunityDate = null;
+    @track isShowModal = false;
 
     connectedCallback(){
         console.log('TESTE connectedCallback');
@@ -35,7 +38,7 @@ export default class CartDetail extends LightningElement {
             this.getProductFromLis(productSelected).quantidade++;
         }else{
             this.products.push({...productSelected, quantidade:1});
-        }        
+        }
                 
         console.log('products', this.products);
         this.calculateTotal();
@@ -53,4 +56,35 @@ export default class CartDetail extends LightningElement {
         return this.products.find( (prodParam) => (prodParam.id === product.id) );
     }
 
+    alterPrice(event){
+        let selectedItem = event.currentTarget.ariaRowIndex;
+        this.products[selectedItem].preco = event.currentTarget.value;
+        this.calculateTotal();
+    }
+
+    alterQuantity(event){
+        let selectedItem = event.currentTarget.ariaRowIndex;
+        this.products[selectedItem].quantidade = event.currentTarget.value;
+        this.calculateTotal();
+    }
+
+    handleName(event){
+        this.opportunityName = event.currentTarget.value;
+    }
+
+    handleDate(event){
+        this.opportunityDate = event.currentTarget.value;
+    }
+
+    openModal(){
+        this.isShowModal = true;
+    }
+
+    get isEnabledSave(){
+        return this.opportunityName != null && this.opportunityDate != null;
+    }
+
+    get isOpenModal(){
+        return this.isShowModal;
+    }
 }

@@ -21,7 +21,8 @@
                                         min="0"
                                         value={cTemp.preco}
                                         aria-rowindex={productPosition}
-                                        class="slds-m-bottom_small slds-text-title"></lightning-input>
+                                        class="slds-m-bottom_small slds-text-title"
+                                        onchange={alterPrice}></lightning-input>
                                 </td>
                                 <td>
                                     <div style="padding-left: 10px; padding-right:10px">
@@ -30,6 +31,7 @@
                                         min="1"
                                         value={cTemp.quantidade}
                                         aria-rowindex={productPosition}
+                                        onchange={alterQuantity}
                                         class="slds-m-bottom_small slds-text-title"></lightning-input>
                                     </div>
                                 </td>
@@ -52,11 +54,34 @@
                 <lightning-input
                     type="text"
                     name="opportunityName"
-                    label="Nome da oportunidade"></lightning-input>
+                    label="Nome da oportunidade"
+                    onchange={handleName}></lightning-input>
+
                 <lightning-input
                     type="date"
                     name="opportunityCloseDate"
-                    label="Informe a data de fechamento"></lightning-input>    
+                    label="Informe a data de fechamento"
+                    onchange={handleDate}></lightning-input>    
+
+                <template if:true={isEnabledSave}>
+                    <div style="text-align: center;">
+                        <br/>
+                        <br/>
+                        <lightning-button 
+                            variant="brand"
+                            label="Salvar"
+                            onclick={openModal}></lightning-button>  
+                    </div>                     
+                </template>
+
+                <template if:true={isOpenModal}>
+                    <c-cart-confirmation
+                        products={products}
+                        nameopp={opportunityName}
+                        dateopp={opportunityDate}
+                        amountopp={total}
+                        idaccount={accountId}></c-cart-confirmation>
+                </template>
     
             </div>
         </lightning-card>
