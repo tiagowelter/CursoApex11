@@ -18,4 +18,23 @@ public with sharing class AccountController {
         return JSON.serialize(inputList);
     }
 
+    @AuraEnabled
+    public static PageResultWrapper getAccountsSearch(String filterAA, Integer pageNumber){
+
+        Integer pageSize = 9;
+        String whereClausule = '';
+        Integer offset = (pageNumber-1)*pageSize;
+
+        if(String.isNotBlank(filterAA)){
+            whereClausule += ' WHERE Name LIKE \'%'+filterAA+'%\' ';
+        }
+
+        PageResultWrapper result = new PageResultWrapper();
+        result.tamanhoPagina = pageSize;
+        result.totalItems = Database.countQuery('SELECT Count() FROM Account '+whereClausule);
+        result.allDatas = Database.query('SELECT Id, Name FROM Account '+whereClausule+' LIMIT :pageSize OFFSET :offset ');
+
+        return result;
+    }    
+
 }

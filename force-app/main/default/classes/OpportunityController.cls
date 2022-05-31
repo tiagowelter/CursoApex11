@@ -34,6 +34,5 @@ public with sharing class OpportunityController {
         insert itemsLis;
 
         return oppObj;
-    }
-    
+    }    
 }

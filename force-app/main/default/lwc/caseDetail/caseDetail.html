@@ -1,0 +1,37 @@
+<template>
+    <lightning-card title="Criar Chamado" icon-name="custom:custom60">
+        <div class="slds-m-horizontal_medium">
+            <template if:false={isSelectedAccount}>
+                <p style="margin-left: 26px;color:red">SELECIONE O CLIENTE</p>
+            </template>
+
+            <template if:true={isSelectedAccount}>
+                <p><b>Cliente: </b>{accountName}</p>
+            </template>            
+
+            <div class="slds-m-arround_medium slds-p-top_medium slds-p-left_medium">
+                <lightning-input
+                type="text"
+                label="Assunto do chamado"
+                onchange={handleCaseName}></lightning-input>
+
+                <lightning-input
+                    type="date"
+                    label="Data de abertura"
+                    onchange={handleCaseDate}></lightning-input>
+
+               <lightning-textarea
+                    placeholder="Digite aqui o problema do cliente...."
+                    onchange={handleDescription}></lightning-textarea>     
+            </div>
+            <template if:true={isSaveCase}>
+                <div class="slds-align_absolute-center">
+                    <lightning-button
+                        variant="brand"
+                        label="Criar chamado"
+                        onclick={createCase}></lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>    
+</template>

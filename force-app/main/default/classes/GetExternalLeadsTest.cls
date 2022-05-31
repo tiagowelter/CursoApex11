@@ -6,7 +6,7 @@ public with sharing class GetExternalLeadsTest {
             HttpResponse response = new HttpResponse();
             response.setHeader('content-type', 'application/json');
             response.setStatusCode(200);
-            response.setBody('[{"attributes" : {"type" : "Lead","url" : "/services/data/v54.0/sobjects/Lead/00Q8c00000zdfa4EAA"},"Id" : "00Q8c00000zdfa4EAA","LastName" : "Welter","Company" : "Tiwe"}]');
+            response.setBody('{"coord":{"lon":-0.1257,"lat":51.5085},"weather":[{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04d"}],"base":"stations","main":{"temp":293.58,"feels_like":293.14,"temp_min":292.06,"temp_max":294.26,"pressure":1021,"humidity":56},"visibility":10000,"wind":{"speed":6.17,"deg":220},"clouds":{"all":100},"dt":1652117193,"sys":{"type":2,"id":2019646,"country":"GB","sunrise":1652069901,"sunset":1652124935},"timezone":3600,"id":2643743,"name":"London","cod":200}');
             return response;
         }
     }

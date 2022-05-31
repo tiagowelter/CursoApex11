@@ -1,0 +1,41 @@
+<template>
+    <div class="slds-card slds-p-arround_x_small">
+        <lightning-card title="Lista contas" icon-name="custom:custom60">
+            <div class="slds-m-horizontal_medium">
+                <div class="c-container">
+                    <lightning-layout multiple-rows>
+                        <template for:each={accoutObj.allDatas} for:item="cTemp">
+                            <lightning-layout-item 
+                                size="4"
+                                key={cTemp.Id}
+                                padding="arround-small">
+                                
+                                <div class="slds-p-top_small">
+                                    <img src="https://certificados.comschool.com.br/logo_clientes/no-image-available.png" class="slds-align_absolute-center" width="150px" height="150px">
+                                </div>
+                                <p class="title slds-align_absolute-center">{cTemp.Name}</p>
+                                <div class="slds-p-top_small slds-align_absolute-center">
+                                    <lightning-button
+                                        variant="brand"
+                                        label="Adicionar Cliente"
+                                        aria-rowindex={cTemp.Id}
+                                        class="slds-m-left_x-small"
+                                        value={cTemp.Name}
+                                        onclick={handleAccount}></lightning-button>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </div>
+                <br/>
+                <hr/>
+                <c-paginator
+                    page-number={page}
+                    page-size={accoutObj.tamanhoPagina}
+                    total-item-count={accoutObj.totalItems}
+                    onprevious={handlePreviousPage}
+                    onnext={handleNextPage}></c-paginator>
+            </div>
+        </lightning-card>
+    </div>
+</template>
